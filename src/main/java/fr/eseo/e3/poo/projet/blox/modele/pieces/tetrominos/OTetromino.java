@@ -16,8 +16,8 @@ public class OTetromino extends Tetromino {
     protected void setElements(Coordonnees coordonnees, Couleur couleur) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
-                int abscisse = coordonnees.getAbscisse() - i;
-                int ordonnee = coordonnees.getOrdonnee() + j;
+                int abscisse = coordonnees.getAbscisse() + i;
+                int ordonnee = coordonnees.getOrdonnee() - j;
                 this.elements[i*2 + j] = new Element(new Coordonnees(abscisse, ordonnee), couleur);
             }
         }
