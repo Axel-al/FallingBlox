@@ -8,4 +8,8 @@ public enum Couleur {
     JAUNE,
     CYAN,
     VIOLET;
+
+    public static Couleur getDefault() {
+        return Couleur.values()[0];
+    }
 }
