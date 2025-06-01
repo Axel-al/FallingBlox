@@ -1,6 +1,34 @@
 package fr.eseo.e3.poo.projet.blox.modele.pieces.tetrominos;
 
+import fr.eseo.e3.poo.projet.blox.modele.*;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.*;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public abstract class Tetromino implements Piece {
+    protected final Element[] elements;
+
+    public Tetromino(Coordonnees coordonnees, Couleur couleur) {
+        this.elements = new Element[4];
+        setElements(coordonnees, couleur);
+    }
+
+    protected abstract void setElements(Coordonnees coordonnees, Couleur couleur);
+
+    @Override
+    public Element[] getElements() {
+        return elements;
+    }
+
+    @Override
+    public void setPosition(int abscisse, int ordonnee) {
+        setElements(new Coordonnees(abscisse, ordonnee), getCouleur());
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + " :\n\t" +
+                Arrays.stream(elements).map(Element::toString).collect(Collectors.joining("\n\t"));
+    }
 }
