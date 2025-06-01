@@ -9,4 +9,8 @@ public interface Piece {
     default Couleur getCouleur() {
         return getElements()[0].getCouleur();
     }
+
+    default Coordonnees getPosition() {
+        return getElements()[0].getCoordonnees();
+    }
 }
