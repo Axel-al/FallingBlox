@@ -2,6 +2,7 @@ package fr.eseo.e3.poo.projet.blox.modele.pieces.tetrominos;
 
 import fr.eseo.e3.poo.projet.blox.modele.*;
 import org.junit.jupiter.api.Test;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
