@@ -39,8 +39,8 @@ public class Puits {
     }
 
     public void setPieceSuivante(Piece pieceSuivante) {
-        if (pieceSuivante != null) {
-            this.pieceActuelle = pieceSuivante;
+        if (this.pieceSuivante != null) {
+            this.pieceActuelle = this.pieceSuivante;
             this.pieceActuelle.setPosition(this.largeur/2, -4);
 
         }

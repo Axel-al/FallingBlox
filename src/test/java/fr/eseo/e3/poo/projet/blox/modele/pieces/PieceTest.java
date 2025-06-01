@@ -64,6 +64,14 @@ public class PieceTest {
         }
     }
 
+    @ParameterizedTest
+    @MethodSource("providePieces")
+    public void testSetEtGetPuits(Piece piece) {
+        Puits puits = new Puits();
+        piece.setPuits(puits);
+        assertEquals(puits, piece.getPuits());
+    }
+
     // Fournit toutes les pièces à tester
     private static Stream<Arguments> providePieces() {
         return Stream.of(
