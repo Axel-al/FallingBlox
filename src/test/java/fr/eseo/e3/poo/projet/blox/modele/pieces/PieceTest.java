@@ -1,6 +1,7 @@
 package fr.eseo.e3.poo.projet.blox.modele.pieces;
 
 import fr.eseo.e3.poo.projet.blox.modele.*;
+import fr.eseo.e3.poo.projet.blox.modele.pieces.pentominos.*;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.tetrominos.*;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +17,7 @@ public class PieceTest {
     @ParameterizedTest
     @MethodSource("providePieces")
     public void testNombreElementsEtPosition(Piece piece) {
-        assertTrue(piece instanceof Tetromino); // || piece instanceof Pentomino);
+        assertTrue(piece instanceof Tetromino || piece instanceof Pentomino);
         boolean isTetromino = piece instanceof Tetromino;
         Element[] elements = piece.getElements();
 
@@ -41,7 +42,7 @@ public class PieceTest {
     @ParameterizedTest
     @MethodSource("providePieces")
     public void testSetPosition(Piece piece) {
-        assertTrue(piece instanceof Tetromino); // || piece instanceof Pentomino);
+        assertTrue(piece instanceof Tetromino || piece instanceof Pentomino);
         boolean isTetromino = piece instanceof Tetromino;
 
         Coordonnees newPosition = randomCoord();
@@ -73,11 +74,27 @@ public class PieceTest {
                 Arguments.of(new LTetromino(randomCoord(), Couleur.JAUNE)),
                 Arguments.of(new STetromino(randomCoord(), Couleur.CYAN)),
                 Arguments.of(new TTetromino(randomCoord(), Couleur.ORANGE)),
-                Arguments.of(new ZTetromino(randomCoord(), Couleur.VIOLET))
+                Arguments.of(new ZTetromino(randomCoord(), Couleur.VIOLET)),
 
-                // Pentominos plus tard :
-                // Arguments.of(new LPentomino(...)),
-                // etc.
+                // Pentominos
+                Arguments.of(new IPentomino(randomCoord(), Couleur.ROUGE)),
+                Arguments.of(new FPentomino1(randomCoord(), Couleur.BLEU)),
+                Arguments.of(new FPentomino2(randomCoord(), Couleur.BLEU)),
+                Arguments.of(new LPentomino1(randomCoord(), Couleur.JAUNE)),
+                Arguments.of(new LPentomino2(randomCoord(), Couleur.JAUNE)),
+                Arguments.of(new NPentomino1(randomCoord(), Couleur.VERT)),
+                Arguments.of(new NPentomino2(randomCoord(), Couleur.VERT)),
+                Arguments.of(new PPentomino1(randomCoord(), Couleur.CYAN)),
+                Arguments.of(new PPentomino2(randomCoord(), Couleur.CYAN)),
+                Arguments.of(new TPentomino(randomCoord(), Couleur.ORANGE)),
+                Arguments.of(new UPentomino(randomCoord(), Couleur.VIOLET)),
+                Arguments.of(new VPentomino(randomCoord(), Couleur.ROUGE)),
+                Arguments.of(new WPentomino(randomCoord(), Couleur.BLEU)),
+                Arguments.of(new XPentomino(randomCoord(), Couleur.JAUNE)),
+                Arguments.of(new YPentomino1(randomCoord(), Couleur.VERT)),
+                Arguments.of(new YPentomino2(randomCoord(), Couleur.VERT)),
+                Arguments.of(new ZPentomino1(randomCoord(), Couleur.ORANGE)),
+                Arguments.of(new ZPentomino2(randomCoord(), Couleur.ORANGE))
         );
     }
 
