@@ -13,4 +13,7 @@ public interface Piece {
     default Coordonnees getPosition() {
         return getElements()[0].getCoordonnees();
     }
+
+    Puits getPuits();
+    void setPuits(Puits puits);
 }

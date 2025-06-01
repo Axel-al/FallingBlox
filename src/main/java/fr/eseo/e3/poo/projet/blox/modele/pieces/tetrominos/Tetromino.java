@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 public abstract class Tetromino implements Piece {
     protected final Element[] elements;
 
+    private Puits puits;
+
     public Tetromino(Coordonnees coordonnees, Couleur couleur) {
         this.elements = new Element[4];
         setElements(coordonnees, couleur);
@@ -30,5 +32,15 @@ public abstract class Tetromino implements Piece {
     public String toString() {
         return this.getClass().getSimpleName() + " :\n\t" +
                 Arrays.stream(elements).map(Element::toString).collect(Collectors.joining("\n\t"));
+    }
+
+    @Override
+    public Puits getPuits() {
+        return this.puits;
+    }
+
+    @Override
+    public void setPuits(Puits puits) {
+        this.puits = puits;
     }
 }

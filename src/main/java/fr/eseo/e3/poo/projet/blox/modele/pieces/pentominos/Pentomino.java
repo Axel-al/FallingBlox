@@ -7,7 +7,9 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public abstract class Pentomino implements Piece {
-    protected Element[] elements;
+    protected final Element[] elements;
+
+    private Puits puits;
 
     public Pentomino(Coordonnees coordonnees, Couleur couleur) {
         this.elements = new Element[5];
@@ -30,5 +32,15 @@ public abstract class Pentomino implements Piece {
     public String toString() {
         return this.getClass().getSimpleName() + " :\n\t" +
                 Arrays.stream(elements).map(Element::toString).collect(Collectors.joining("\n\t"));
+    }
+
+    @Override
+    public Puits getPuits() {
+        return this.puits;
+    }
+
+    @Override
+    public void setPuits(Puits puits) {
+        this.puits = puits;
     }
 }
