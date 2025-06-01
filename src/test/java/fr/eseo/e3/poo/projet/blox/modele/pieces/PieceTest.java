@@ -74,36 +74,8 @@ public class PieceTest {
 
     // Fournit toutes les pièces à tester
     private static Stream<Arguments> providePieces() {
-        return Stream.of(
-                // Tetrominos
-                Arguments.of(new OTetromino(randomCoord(), Couleur.ROUGE)),
-                Arguments.of(new ITetromino(randomCoord(), Couleur.BLEU)),
-                Arguments.of(new JTetromino(randomCoord(), Couleur.VERT)),
-                Arguments.of(new LTetromino(randomCoord(), Couleur.JAUNE)),
-                Arguments.of(new STetromino(randomCoord(), Couleur.CYAN)),
-                Arguments.of(new TTetromino(randomCoord(), Couleur.ORANGE)),
-                Arguments.of(new ZTetromino(randomCoord(), Couleur.VIOLET)),
-
-                // Pentominos
-                Arguments.of(new IPentomino(randomCoord(), Couleur.ROUGE)),
-                Arguments.of(new FPentomino1(randomCoord(), Couleur.BLEU)),
-                Arguments.of(new FPentomino2(randomCoord(), Couleur.BLEU)),
-                Arguments.of(new LPentomino1(randomCoord(), Couleur.JAUNE)),
-                Arguments.of(new LPentomino2(randomCoord(), Couleur.JAUNE)),
-                Arguments.of(new NPentomino1(randomCoord(), Couleur.VERT)),
-                Arguments.of(new NPentomino2(randomCoord(), Couleur.VERT)),
-                Arguments.of(new PPentomino1(randomCoord(), Couleur.CYAN)),
-                Arguments.of(new PPentomino2(randomCoord(), Couleur.CYAN)),
-                Arguments.of(new TPentomino(randomCoord(), Couleur.ORANGE)),
-                Arguments.of(new UPentomino(randomCoord(), Couleur.VIOLET)),
-                Arguments.of(new VPentomino(randomCoord(), Couleur.ROUGE)),
-                Arguments.of(new WPentomino(randomCoord(), Couleur.BLEU)),
-                Arguments.of(new XPentomino(randomCoord(), Couleur.JAUNE)),
-                Arguments.of(new YPentomino1(randomCoord(), Couleur.VERT)),
-                Arguments.of(new YPentomino2(randomCoord(), Couleur.VERT)),
-                Arguments.of(new ZPentomino1(randomCoord(), Couleur.ORANGE)),
-                Arguments.of(new ZPentomino2(randomCoord(), Couleur.ORANGE))
-        );
+        return Stream.of(TypePiece.values())
+                .map(type -> Arguments.of(type.creerInstance(randomCoord())));
     }
 
     private static Coordonnees randomCoord() {
