@@ -14,17 +14,26 @@ public class Puits {
 
     private Piece pieceActuelle;
     private Piece pieceSuivante;
+    private Tas tas;
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public Puits() {
         this.largeur = LARGEUR_PAR_DEFAUT;
         this.profondeur = PROFONDEUR_PAR_DEFAUT;
+        this.tas = new Tas(this);
     }
 
     public Puits(int largeur, int profondeur) {
         this.largeur = largeur;
         this.profondeur = profondeur;
+        this.tas = new Tas(this);
+    }
+
+    public Puits(int largeur, int profondeur, int nbElements, int nbLignes) {
+        this.largeur = largeur;
+        this.profondeur = profondeur;
+        this.tas = new Tas(this, nbElements, nbLignes);
     }
 
     public Piece getPieceActuelle() {
@@ -41,6 +50,14 @@ public class Puits {
 
     public int getProfondeur() {
         return profondeur;
+    }
+
+    public Tas getTas() {
+        return tas;
+    }
+
+    public void setTas(Tas tas) {
+        this.tas = tas;
     }
 
     public void setPieceSuivante(Piece pieceSuivante) {
