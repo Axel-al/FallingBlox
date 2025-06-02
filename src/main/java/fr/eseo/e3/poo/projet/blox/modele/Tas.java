@@ -66,5 +66,37 @@ public class Tas {
         for (Element e : piece.getElements()) {
             this.elements.add(new Element(e.getCoordonnees(), e.getCouleur()));
         }
+        verifierEtSupprimerLignes();
+    }
+
+    public void verifierEtSupprimerLignes() {
+        int largeur = puits.getLargeur();
+
+        for (int y = puits.getProfondeur() - 1; y >= 0; y--) {
+            final int ligne = y;
+
+            long nbElementsSurLigne = elements.stream()
+                    .filter(e -> e.getCoordonnees().getOrdonnee() == ligne)
+                    .map(e -> e.getCoordonnees().getAbscisse())
+                    .distinct()
+                    .count();
+
+            if (nbElementsSurLigne == largeur) {
+                supprimerLigneEtCompacter(ligne);
+                y++; // revérifier la ligne déplacée ici
+            }
+        }
+    }
+
+    private void supprimerLigneEtCompacter(int ligne) {
+        // Supprimer tous les éléments de la ligne
+        elements.removeIf(e -> e.getCoordonnees().getOrdonnee() == ligne);
+
+        // Faire descendre ceux au-dessus
+        for (Element e : elements) {
+            if (e.getCoordonnees().getOrdonnee() < ligne) {
+                e.deplacerDe(0, 1);
+            }
+        }
     }
 }
