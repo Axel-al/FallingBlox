@@ -3,8 +3,8 @@ package fr.eseo.e3.poo.projet.blox.modele;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
 
 public class Puits {
-    final static int LARGEUR_PAR_DEFAUT = 10;
-    final static int PROFONDEUR_PAR_DEFAUT = 18;
+    public final static int LARGEUR_PAR_DEFAUT = 10;
+    public final static int PROFONDEUR_PAR_DEFAUT = 18;
 
     private int largeur;
     private int profondeur;

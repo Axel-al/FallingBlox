@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class UsineDePiece {
-    final static int ALEATOIRE_COMPLET = 0;
-    final static int ALEATOIRE_PIECE = 1;
-    final static int CYCLIC = 2;
+    public final static int ALEATOIRE_COMPLET = 0;
+    public final static int ALEATOIRE_PIECE = 1;
+    public final static int CYCLIC = 2;
 
     private static int mode = ALEATOIRE_PIECE;
     private static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
