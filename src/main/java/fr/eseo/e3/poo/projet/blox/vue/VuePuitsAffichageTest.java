@@ -26,18 +26,25 @@ public class VuePuitsAffichageTest {
     private void testConstructeurPuitsTaille() {
         Puits puits = new Puits();
         UsineDePiece.setMode(UsineDePiece.ALEATOIRE_PIECE);
-        puits.setPieceSuivante(UsineDePiece.genererTetromino()); // 1ʳᵉ : pieceSuivante
-        puits.setPieceSuivante(UsineDePiece.genererTetromino()); // 2ᵉ : devient pieceActuelle
+        puits.setPieceSuivante(UsineDePiece.genererTetromino());
+        puits.setPieceSuivante(UsineDePiece.genererTetromino());
 
-        VuePuits vuePuits = new VuePuits(puits);
-        vuePuits.setVuePiece(new VuePiece(puits.getPieceActuelle(), vuePuits.getTaille()));
+        VuePuits vuePuits = new VuePuits(puits, 40);
 
-        JFrame frame = new JFrame("Puits et taille avec pièce");
+        JFrame frame = new JFrame("Puits et taille dynamique");
         frame.setContentPane(vuePuits);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
+        // Mise à jour dynamique après 2 secondes
+        Timer timer = new Timer(2000, e -> {
+            puits.setLargeur(12);      // déclenche mise à jour de la taille
+            puits.setProfondeur(20);   // idem
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     public static void main(String[] args) {
