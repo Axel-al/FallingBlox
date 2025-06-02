@@ -174,8 +174,8 @@ public class PieceTest {
     }
 
     private static Coordonnees randomCoord() {
-        int abscisse = ThreadLocalRandom.current().nextInt(3, Puits.LARGEUR_PAR_DEFAUT - 2 );
-        int ordonnee = ThreadLocalRandom.current().nextInt(0, Puits.PROFONDEUR_PAR_DEFAUT - 2);
+        int abscisse = ThreadLocalRandom.current().nextInt(3, Puits.LARGEUR_PAR_DEFAUT - 3 );
+        int ordonnee = ThreadLocalRandom.current().nextInt(3, Puits.PROFONDEUR_PAR_DEFAUT - 3);
         return new Coordonnees(abscisse, ordonnee);
     }
 
