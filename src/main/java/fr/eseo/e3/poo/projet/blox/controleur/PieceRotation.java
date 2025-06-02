@@ -1,6 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.controleur;
 
-import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.*;
 import fr.eseo.e3.poo.projet.blox.vue.VuePuits;
 
 import javax.swing.*;
@@ -29,7 +29,7 @@ public class PieceRotation extends MouseAdapter {
                 puits.getPieceActuelle().tourner(true); // horaire
             }
             vuePuits.repaint();
-        } catch (IllegalArgumentException ignored) {
+        } catch (BloxException ignored) {
             // Rotation invalide, on ignore
         }
     }

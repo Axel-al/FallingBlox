@@ -1,6 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.controleur;
 
-import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.*;
 import fr.eseo.e3.poo.projet.blox.vue.VuePuits;
 
 import java.awt.event.*;
@@ -31,8 +31,8 @@ public class PieceDeplacement extends MouseAdapter {
             try {
                 puits.getPieceActuelle().deplacerDe(delta, 0);
                 ancienneColonne = colonne;
-            } catch (IllegalArgumentException ignored) {
-                // collision ou déplacement impossible
+            } catch (BloxException ignore) {
+                // collision ou sortie : ne rien faire
             }
             vuePuits.repaint();
         }
@@ -50,7 +50,7 @@ public class PieceDeplacement extends MouseAdapter {
             try {
                 puits.getPieceActuelle().deplacerDe(0, 1);
                 vuePuits.repaint();
-            } catch (IllegalArgumentException ignored) {
+            } catch (BloxException ignored) {
                 // collision en bas
             }
         }
