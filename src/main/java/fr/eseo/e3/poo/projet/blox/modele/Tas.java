@@ -5,28 +5,34 @@ import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.IntConsumer;
 
 public class Tas {
 
     private final Puits puits;
     private final List<Element> elements;
+    private IntConsumer onLignesSupprimees;
 
     public Tas(Puits puits) {
-        this.puits = puits;
-        this.elements = new ArrayList<>();
+        this(puits, 0, 0, null);
     }
 
     public Tas(Puits puits, int nbElements) {
-        this(puits, nbElements, nbElements / puits.getLargeur() + 1);
+        this(puits, nbElements, nbElements / puits.getLargeur() + 1, new Random(), null);
     }
 
     public Tas(Puits puits, int nbElements, int nbLignes) {
-        this(puits, nbElements, nbLignes, new Random());
+        this(puits, nbElements, nbLignes, new Random(), null);
     }
 
     public Tas(Puits puits, int nbElements, int nbLignes, Random rand) {
+        this(puits, nbElements, nbLignes, rand, null);
+    }
+
+    public Tas(Puits puits, int nbElements, int nbLignes, Random rand, IntConsumer onLignesSupprimees) {
         this.puits = puits;
         this.elements = new ArrayList<>();
+        this.onLignesSupprimees = onLignesSupprimees;
         construireTas(nbElements, nbLignes, rand);
     }
 
@@ -62,6 +68,10 @@ public class Tas {
         return elements;
     }
 
+    public void setOnLignesSupprimees(IntConsumer onLignesSupprimees) {
+        this.onLignesSupprimees = onLignesSupprimees;
+    }
+
     public void ajouterElements(Piece piece) {
         for (Element e : piece.getElements()) {
             this.elements.add(new Element(e.getCoordonnees(), e.getCouleur()));
@@ -71,6 +81,7 @@ public class Tas {
 
     public void verifierEtSupprimerLignes() {
         int largeur = puits.getLargeur();
+        int lignesSupprimees = 0;
 
         for (int y = puits.getProfondeur() - 1; y >= 0; y--) {
             final int ligne = y;
@@ -83,16 +94,19 @@ public class Tas {
 
             if (nbElementsSurLigne == largeur) {
                 supprimerLigneEtCompacter(ligne);
-                y++; // revérifier la ligne déplacée ici
+                lignesSupprimees++;
+                y++; // revérifier la ligne maintenant occupée par un élément descendu
             }
+        }
+
+        if (lignesSupprimees > 0 && onLignesSupprimees != null) {
+            onLignesSupprimees.accept(lignesSupprimees);
         }
     }
 
     private void supprimerLigneEtCompacter(int ligne) {
-        // Supprimer tous les éléments de la ligne
         elements.removeIf(e -> e.getCoordonnees().getOrdonnee() == ligne);
 
-        // Faire descendre ceux au-dessus
         for (Element e : elements) {
             if (e.getCoordonnees().getOrdonnee() < ligne) {
                 e.deplacerDe(0, 1);

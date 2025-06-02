@@ -1,13 +1,13 @@
 package fr.eseo.e3.poo.projet.blox.vue;
 
 import fr.eseo.e3.poo.projet.blox.controleur.*;
-import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.*;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.*;
+import java.beans.*;
 
 public class VuePuits extends JPanel implements PropertyChangeListener {
     public final static int TAILLE_PAR_DEFAUT = 30;
@@ -41,6 +41,25 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
         this.addMouseWheelListener(this.pieceDeplacement);
         this.addMouseListener(this.pieceDeplacement);
         this.addMouseListener(this.pieceRotation);
+
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                try {
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_LEFT -> puits.getPieceActuelle().deplacerDe(-1, 0);
+                        case KeyEvent.VK_RIGHT -> puits.getPieceActuelle().deplacerDe(1, 0);
+                        case KeyEvent.VK_DOWN -> puits.getPieceActuelle().deplacerDe(0, 1);
+                        case KeyEvent.VK_Q -> puits.getPieceActuelle().tourner(false);
+                        case KeyEvent.VK_D -> puits.getPieceActuelle().tourner(true);
+                    }
+                    repaint();
+                } catch (BloxException ignored) {}
+            }
+        });
+
     }
 
     public int getTaille() {

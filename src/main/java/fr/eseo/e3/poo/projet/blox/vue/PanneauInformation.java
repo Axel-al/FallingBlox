@@ -13,11 +13,18 @@ public class PanneauInformation extends JPanel implements PropertyChangeListener
     private static final int TAILLE_VUE_PIECE = 20;
     private VuePiece vuePiece;
 
+    private int score = 0;
+
     public PanneauInformation(Puits puits) {
         super();
         puits.addPropertyChangeListener(this);
         this.setPreferredSize(new Dimension(140, 70));
         this.setBackground(Color.WHITE);
+    }
+
+    public void ajouterScore(int points) {
+        this.score += points;
+        this.repaint();
     }
 
     @Override
@@ -35,6 +42,8 @@ public class PanneauInformation extends JPanel implements PropertyChangeListener
         if (vuePiece != null) {
             Graphics2D g2D = (Graphics2D) g.create();
             vuePiece.afficherPiece(g2D);
+            g2D.setColor(Color.BLACK);
+            g2D.drawString("Score: " + score, 5, 120);
             g2D.dispose();
         }
     }
