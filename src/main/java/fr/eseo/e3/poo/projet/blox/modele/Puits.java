@@ -2,6 +2,9 @@ package fr.eseo.e3.poo.projet.blox.modele;
 
 import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 public class Puits {
     public final static int LARGEUR_PAR_DEFAUT = 10;
     public final static int PROFONDEUR_PAR_DEFAUT = 18;
@@ -11,6 +14,8 @@ public class Puits {
 
     private Piece pieceActuelle;
     private Piece pieceSuivante;
+
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public Puits() {
         this.largeur = LARGEUR_PAR_DEFAUT;
@@ -40,19 +45,32 @@ public class Puits {
 
     public void setPieceSuivante(Piece pieceSuivante) {
         if (this.pieceSuivante != null) {
+            Piece ancienne = this.pieceActuelle;
             this.pieceActuelle = this.pieceSuivante;
-            this.pieceActuelle.setPosition(this.largeur/2, -4);
-
+            this.pieceActuelle.setPosition(this.largeur / 2, -4);
+            pcs.firePropertyChange("pieceActuelle", ancienne, this.pieceActuelle);
         }
         this.pieceSuivante = pieceSuivante;
     }
 
     public void setLargeur(int largeur) {
+        int ancienne = this.largeur;
         this.largeur = largeur;
+        pcs.firePropertyChange("largeur", ancienne, largeur);
     }
 
     public void setProfondeur(int profondeur) {
+        int ancienne = this.profondeur;
         this.profondeur = profondeur;
+        pcs.firePropertyChange("profondeur", ancienne, profondeur);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 
     @Override

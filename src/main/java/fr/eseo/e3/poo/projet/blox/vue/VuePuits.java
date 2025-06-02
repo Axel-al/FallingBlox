@@ -1,11 +1,14 @@
 package fr.eseo.e3.poo.projet.blox.vue;
 
 import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class VuePuits extends JPanel {
+public class VuePuits extends JPanel implements PropertyChangeListener {
     public final static int TAILLE_PAR_DEFAUT = 30;
 
     private Puits puits;
@@ -21,6 +24,7 @@ public class VuePuits extends JPanel {
         this.puits = puits;
         this.setBackground(Color.WHITE);
         this.setTaille(taille);
+        this.puits.addPropertyChangeListener(this);
     }
 
     public int getTaille() {
@@ -29,7 +33,9 @@ public class VuePuits extends JPanel {
 
     public void setTaille(int taille) {
         this.taille = taille;
-        this.setPreferredSize(new Dimension(this.puits.getLargeur() * this.taille, this.puits.getProfondeur() * this.taille));
+        this.setPreferredSize(new Dimension(
+                this.puits.getLargeur() * this.taille,
+                this.puits.getProfondeur() * this.taille));
 
         Window window = SwingUtilities.getWindowAncestor(this);
         if (window instanceof JFrame frame) {
@@ -44,6 +50,7 @@ public class VuePuits extends JPanel {
     public void setPuits(Puits puits) {
         this.puits = puits;
         setTaille(this.taille);
+        this.puits.addPropertyChangeListener(this);
     }
 
     public VuePiece getVuePiece() {
@@ -72,5 +79,18 @@ public class VuePuits extends JPanel {
         }
 
         g2D.dispose();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case "pieceActuelle" -> {
+                this.vuePiece = new VuePiece((Piece) evt.getNewValue(), this.taille);
+                this.repaint();
+            }
+            case "largeur", "profondeur" -> {
+                this.setTaille(this.taille);
+            }
+        }
     }
 }
