@@ -1,5 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.modele;
 
+import fr.eseo.e3.poo.projet.blox.modele.pieces.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -54,4 +55,22 @@ public class TasTest {
         Puits puits = new Puits(5, 5);
         assertThrows(IllegalArgumentException.class, () -> new Tas(puits, 100, 2));
     }
+
+    @Test
+    public void testAjouterElements() {
+        Puits puits = new Puits();
+        Tas tas = new Tas(puits);
+        puits.setTas(tas);
+
+        Piece piece = TypePiece.T.creerInstance(new Coordonnees(4, 16), Couleur.VIOLET);
+        piece.setPuits(puits);
+
+        tas.ajouterElements(piece);
+
+        for (Element e : piece.getElements()) {
+            assertTrue(tas.getElements().contains(e),
+                    "L'élément " + e + " aurait dû être ajouté au tas.");
+        }
+    }
+
 }

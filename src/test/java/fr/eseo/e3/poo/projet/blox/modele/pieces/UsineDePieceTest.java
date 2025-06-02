@@ -111,6 +111,54 @@ public class UsineDePieceTest {
         assertEquals(Set.of(pentominos), types);
     }
 
+    @Test
+    public void testGenererPieceAleatoirePiece() {
+        UsineDePiece.setMode(UsineDePiece.ALEATOIRE_PIECE);
+        Piece piece = UsineDePiece.genererPiece();
+        assertNotNull(piece);
+        assertEquals(new Coordonnees(2, 3), piece.getPosition());
+
+        TypePiece type = findTypeFromClass(piece.getClass());
+        assertEquals(type.getCouleurParDefaut(), piece.getCouleur());
+    }
+
+    @Test
+    public void testGenererPieceAleatoireComplet() {
+        UsineDePiece.setMode(UsineDePiece.ALEATOIRE_COMPLET);
+        Piece piece = UsineDePiece.genererPiece();
+        assertNotNull(piece);
+        assertNotNull(piece.getCouleur());
+        assertEquals(new Coordonnees(2, 3), piece.getPosition());
+    }
+
+    @Test
+    public void testGenererPieceCyclic() {
+        UsineDePiece.setMode(UsineDePiece.CYCLIC);
+        Set<TypePiece> types = new HashSet<>();
+
+        TypePiece[] pieces = TypePiece.values();
+
+        Piece premier = UsineDePiece.genererPiece();
+        assertEquals(TypePiece.O, findTypeFromClass(premier.getClass()));
+
+        for (int i = 1; i < pieces.length + 1; i++) {
+            Piece piece = UsineDePiece.genererPiece();
+            assertNotNull(piece);
+            assertEquals(new Coordonnees(2, 3), piece.getPosition());
+
+            TypePiece type = findTypeFromClass(piece.getClass());
+            assertEquals(type.getCouleurParDefaut(), piece.getCouleur());
+
+            types.add(type);
+
+            if (i == pieces.length) {
+                assertEquals(TypePiece.O, type);
+            }
+        }
+
+        assertEquals(Set.of(pieces), types);
+    }
+
     // Méthode utilitaire pour retrouver le TypePiece correspondant à une classe
     private TypePiece findTypeFromClass(Class<? extends Piece> clazz) {
         for (TypePiece type : TypePiece.values()) {

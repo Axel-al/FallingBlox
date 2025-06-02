@@ -1,6 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.modele;
 
-import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
+import fr.eseo.e3.poo.projet.blox.modele.pieces.*;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -88,6 +88,25 @@ public class Puits {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
+    }
+
+    private void gererCollision() {
+        this.getTas().ajouterElements(this.pieceActuelle);
+        this.setPieceSuivante(UsineDePiece.genererTetromino(this)); // Ou alea selon le mode
+    }
+
+    public void gravite() {
+        if (this.pieceActuelle == null) return;
+
+        try {
+            this.pieceActuelle.deplacerDe(0, 1);
+        } catch (BloxException e) {
+            if (e.getType() == BloxException.BLOX_COLLISION) {
+                gererCollision();
+            } else if (e.getType() == BloxException.BLOX_SORTIE_PUITS) {
+                // On ne fait rien, car ce cas ne devrait pas survenir verticalement
+            }
+        }
     }
 
     @Override

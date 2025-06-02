@@ -1,5 +1,7 @@
 package fr.eseo.e3.poo.projet.blox.modele;
 
+import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -58,5 +60,11 @@ public class Tas {
 
     public List<Element> getElements() {
         return elements;
+    }
+
+    public void ajouterElements(Piece piece) {
+        for (Element e : piece.getElements()) {
+            this.elements.add(new Element(e.getCoordonnees(), e.getCouleur()));
+        }
     }
 }

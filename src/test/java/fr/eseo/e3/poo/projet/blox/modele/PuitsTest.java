@@ -1,6 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.modele;
 
-import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
+import fr.eseo.e3.poo.projet.blox.modele.pieces.*;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.tetrominos.OTetromino;
 import org.junit.jupiter.api.Test;
 
@@ -91,5 +91,28 @@ public class PuitsTest {
         Tas tas = new Tas(puits, 5, 1);
         puits.setTas(tas);
         assertEquals(tas, puits.getTas());
+    }
+
+    @Test
+    public void testGraviteEtCollisionAvecFond() {
+        Puits puits = new Puits();
+        var piece = UsineDePiece.genererPiece(puits);
+        puits.setPieceSuivante(piece);
+        puits.setPieceSuivante(UsineDePiece.genererPiece(puits));
+
+        puits.getPieceActuelle().setPuits(puits);
+        puits.getPieceSuivante().setPuits(puits);
+
+        assertEquals(piece, puits.getPieceActuelle());
+
+        int maxIterations = puits.getProfondeur();
+        for (int i = 0; i < maxIterations + 4; i++) {
+            puits.gravite();
+        }
+
+        // La pièce aurait dû se disloquer et ses éléments ajoutés au tas
+        assertNotEquals(piece, puits.getPieceActuelle());
+        assertNotNull(puits.getTas());
+        assertFalse(puits.getTas().getElements().isEmpty(), "Le tas devrait contenir des éléments");
     }
 }
