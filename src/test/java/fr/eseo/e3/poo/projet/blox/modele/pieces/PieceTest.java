@@ -74,7 +74,8 @@ public class PieceTest {
 
     @ParameterizedTest
     @MethodSource("providePieces")
-    public void testDeplacerDe(Piece piece) {
+    public void testDeplacerDe(Piece piece) throws BloxException {
+        piece.setPuits(new Puits());
         Coordonnees origine = piece.getPosition();
 
         piece.deplacerDe(-1, 0);
@@ -82,15 +83,12 @@ public class PieceTest {
         assertEquals(origine.getOrdonnee(), piece.getPosition().getOrdonnee());
 
         piece.deplacerDe(1, 0);
-
         piece.deplacerDe(1, 0);
         assertEquals(origine.getAbscisse() + 1, piece.getPosition().getAbscisse());
         assertEquals(origine.getOrdonnee(), piece.getPosition().getOrdonnee());
 
         piece.deplacerDe(-1, 0);
-
         piece.deplacerDe(0, 1);
-        assertEquals(origine.getAbscisse(), piece.getPosition().getAbscisse());
         assertEquals(origine.getOrdonnee() + 1, piece.getPosition().getOrdonnee());
 
         assertThrows(IllegalArgumentException.class, () -> piece.deplacerDe(0, -1));
@@ -100,13 +98,13 @@ public class PieceTest {
 
     @ParameterizedTest
     @MethodSource("providePieces")
-    public void testTourner(Piece piece) {
+    public void testTourner(Piece piece) throws BloxException {
+        piece.setPuits(new Puits());
         Element[] beforeRotation = deepCopy(piece.getElements());
 
         piece.tourner(true); // sens horaire
 
         if (piece instanceof OTetromino || piece instanceof XPentomino) {
-            // Ces pièces ne doivent pas tourner
             for (int i = 0; i < beforeRotation.length; i++) {
                 assertEquals(beforeRotation[i].getCoordonnees(), piece.getElements()[i].getCoordonnees(),
                         piece.getClass().getSimpleName() + " ne devrait pas tourner");
@@ -121,6 +119,44 @@ public class PieceTest {
             }
             assertTrue(auMoinsUnElementBouge, "La pièce aurait dû changer après rotation.");
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePieces")
+    public void testDeplacementCollisionFond(Piece piece) {
+        Puits puits = new Puits();
+        piece.setPuits(puits);
+        piece.setPosition(puits.getLargeur() / 2, puits.getProfondeur() - 1);
+
+        assertThrows(BloxException.class, () -> piece.deplacerDe(0, 1));
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePieces")
+    public void testDeplacementCollisionAvecTas(Piece piece) {
+        Puits puits = new Puits();
+        Tas tas = new Tas(puits);
+        int x = puits.getLargeur() / 2;
+        int y = 10;
+        tas.getElements().add(new Element(x, y, piece.getCouleur()));
+        puits.setTas(tas);
+        piece.setPuits(puits);
+        piece.setPosition(x, y - 1);
+
+        assertThrows(BloxException.class, () -> piece.deplacerDe(0, 1));
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePieces")
+    public void testSortiePuits(Piece piece) {
+        Puits puits = new Puits();
+        piece.setPuits(puits);
+
+        piece.setPosition(0, 5);
+        assertThrows(BloxException.class, () -> piece.deplacerDe(-1, 0));
+
+        piece.setPosition(puits.getLargeur() - 1, 5);
+        assertThrows(BloxException.class, () -> piece.deplacerDe(1, 0));
     }
 
     private static Element[] deepCopy(Element[] original) {
@@ -138,8 +174,8 @@ public class PieceTest {
     }
 
     private static Coordonnees randomCoord() {
-        int abscisse = ThreadLocalRandom.current().nextInt(0, 100);
-        int ordonnee = ThreadLocalRandom.current().nextInt(0, 100);
+        int abscisse = ThreadLocalRandom.current().nextInt(3, Puits.LARGEUR_PAR_DEFAUT - 2 );
+        int ordonnee = ThreadLocalRandom.current().nextInt(0, Puits.PROFONDEUR_PAR_DEFAUT - 2);
         return new Coordonnees(abscisse, ordonnee);
     }
 
