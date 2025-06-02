@@ -1,0 +1,41 @@
+package fr.eseo.e3.poo.projet.blox.vue;
+
+import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
+
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class PanneauInformation extends JPanel implements PropertyChangeListener {
+
+    private static final int TAILLE_VUE_PIECE = 10;
+    private VuePiece vuePiece;
+
+    public PanneauInformation(Puits puits) {
+        super();
+        puits.addPropertyChangeListener(this);
+        this.setPreferredSize(new Dimension(70, 70));
+        this.setBackground(Color.WHITE);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("pieceSuivante".equals(evt.getPropertyName())) {
+            Piece pieceSuivante = (Piece) evt.getNewValue();
+            this.vuePiece = new VuePiece(pieceSuivante, TAILLE_VUE_PIECE);
+            this.repaint();
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (vuePiece != null) {
+            Graphics2D g2D = (Graphics2D) g.create();
+            vuePiece.afficherPiece(g2D);
+            g2D.dispose();
+        }
+    }
+}
