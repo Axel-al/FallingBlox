@@ -30,8 +30,8 @@ public class VuePuitsAffichageTest {
 
         // Important : VuePuits est listener AVANT ces appels
         UsineDePiece.setMode(UsineDePiece.ALEATOIRE_PIECE);
-        puits.setPieceSuivante(UsineDePiece.genererTetromino());
-        puits.setPieceSuivante(UsineDePiece.genererTetromino());
+        puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
+        puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
         puits.getPieceActuelle().setPosition(4, 7);
 
         JFrame frame = new JFrame("Puits et pièce automatique");

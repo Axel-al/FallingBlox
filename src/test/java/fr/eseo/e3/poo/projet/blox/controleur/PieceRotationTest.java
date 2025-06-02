@@ -17,8 +17,8 @@ public class PieceRotationTest {
         VuePuits vuePuits = new VuePuits(puits, 40);
 
         // Génère une pièce de test visible
-        puits.setPieceSuivante(UsineDePiece.genererTetromino());
-        puits.setPieceSuivante(UsineDePiece.genererTetromino());
+        puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
+        puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
 
         JFrame frame = new JFrame("Test rotation souris");
         frame.setContentPane(vuePuits);

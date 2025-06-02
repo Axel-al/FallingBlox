@@ -60,6 +60,33 @@ public final class UsineDePiece {
         }
     }
 
+    public static Tetromino genererTetromino(Puits puits) {
+        Tetromino tetromino;
+        TypePiece tetrominoType;
+        var coords = new Coordonnees(2, 3);
+
+        switch (UsineDePiece.mode) {
+            case CYCLIC:
+                tetrominoType = TypePiece.getTetrominos()[indexTetromino++];
+                indexTetromino %= TypePiece.getTetrominos().length;
+                tetromino = (Tetromino) tetrominoType.creerInstance(coords);
+                break;
+            case ALEATOIRE_PIECE:
+                tetrominoType = TypePiece.getTetrominos()[RANDOM.nextInt(TypePiece.getTetrominos().length)];
+                tetromino = (Tetromino) tetrominoType.creerInstance(coords);
+                break;
+            case ALEATOIRE_COMPLET:
+                tetrominoType = TypePiece.getTetrominos()[RANDOM.nextInt(TypePiece.getTetrominos().length)];
+                var couleur = Couleur.values()[RANDOM.nextInt(Couleur.values().length)];
+                tetromino = (Tetromino) tetrominoType.creerInstance(coords, couleur);
+                break;
+            default:
+                throw new IllegalArgumentException("Le mode choisi n'est pas valide");
+        }
+        tetromino.setPuits(puits);
+        return tetromino;
+    }
+
     public static Pentomino genererPentomino() {
         TypePiece pentominoType;
         var coords = new Coordonnees(2, 3);
@@ -79,5 +106,32 @@ public final class UsineDePiece {
             default:
                 throw new IllegalArgumentException("Le mode choisi n'est pas valide");
         }
+    }
+
+    public static Pentomino genererPentomino(Puits puits) {
+        Pentomino pentomino;
+        TypePiece pentominoType;
+        var coords = new Coordonnees(2, 3);
+
+        switch (UsineDePiece.mode) {
+            case CYCLIC:
+                pentominoType = TypePiece.getPentominos()[indexPentomino++];
+                indexPentomino %= TypePiece.getPentominos().length;
+                pentomino = (Pentomino) pentominoType.creerInstance(coords);
+                break;
+            case ALEATOIRE_PIECE:
+                pentominoType = TypePiece.getPentominos()[RANDOM.nextInt(TypePiece.getPentominos().length)];
+                pentomino = (Pentomino) pentominoType.creerInstance(coords);
+                break;
+            case ALEATOIRE_COMPLET:
+                pentominoType = TypePiece.getPentominos()[RANDOM.nextInt(TypePiece.getPentominos().length)];
+                var couleur = Couleur.values()[RANDOM.nextInt(Couleur.values().length)];
+                pentomino = (Pentomino) pentominoType.creerInstance(coords, couleur);
+                break;
+            default:
+                throw new IllegalArgumentException("Le mode choisi n'est pas valide");
+        }
+        pentomino.setPuits(puits);
+        return pentomino;
     }
 }

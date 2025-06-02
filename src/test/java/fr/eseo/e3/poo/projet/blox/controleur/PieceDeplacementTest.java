@@ -1,6 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.controleur;
 
-import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.*;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.UsineDePiece;
 import fr.eseo.e3.poo.projet.blox.vue.VuePuits;
 
@@ -17,14 +17,14 @@ public class PieceDeplacementTest {
         VuePuits vuePuits = new VuePuits(puits, 40);
 
         // Génère une pièce visible à l'écran
-        puits.setPieceSuivante(UsineDePiece.genererPentomino());
-        puits.setPieceSuivante(UsineDePiece.genererTetromino());
+        puits.setPieceSuivante(UsineDePiece.genererPentomino(puits));
+        puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
 
         // Fait descendre manuellement la pièce pour qu’elle soit visible
         for (int i = 0; i < 7; i++) {
             try {
                 puits.getPieceActuelle().deplacerDe(0, 1);
-            } catch (IllegalArgumentException ignored) {
+            } catch (BloxException ignored) {
                 // ignore erreurs de dépassement
             }
         }
