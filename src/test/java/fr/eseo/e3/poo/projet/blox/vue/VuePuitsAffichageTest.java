@@ -1,6 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.vue;
 
-import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.*;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.UsineDePiece;
 
 import javax.swing.*;
@@ -8,7 +8,6 @@ import javax.swing.*;
 public class VuePuitsAffichageTest {
 
     public VuePuitsAffichageTest() {
-        testConstructeurPuits();
         testConstructeurPuitsTaille();
     }
 
@@ -26,6 +25,7 @@ public class VuePuitsAffichageTest {
 
     private void testConstructeurPuitsTaille() {
         Puits puits = new Puits();
+        puits.setTas(new Tas(puits, 15));
         VuePuits vuePuits = new VuePuits(puits, 40); // s’enregistre aussi comme listener ici
 
         // Important : VuePuits est listener AVANT ces appels
@@ -40,14 +40,6 @@ public class VuePuitsAffichageTest {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
-        // Mise à jour dynamique après 2 secondes
-        Timer timer = new Timer(2000, e -> {
-            puits.setLargeur(12);      // déclenche mise à jour de la taille
-            puits.setProfondeur(20);   // idem
-        });
-        timer.setRepeats(false);
-        timer.start();
     }
 
     public static void main(String[] args) {
