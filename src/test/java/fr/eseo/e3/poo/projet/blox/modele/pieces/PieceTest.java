@@ -77,38 +77,61 @@ public class PieceTest {
     public void testDeplacerDe(Piece piece) {
         Coordonnees origine = piece.getPosition();
 
-        // Test déplacement valide : gauche
         piece.deplacerDe(-1, 0);
         assertEquals(origine.getAbscisse() - 1, piece.getPosition().getAbscisse());
         assertEquals(origine.getOrdonnee(), piece.getPosition().getOrdonnee());
 
-        // Revenir à la position d’origine
         piece.deplacerDe(1, 0);
 
-        // Test déplacement valide : droite
         piece.deplacerDe(1, 0);
         assertEquals(origine.getAbscisse() + 1, piece.getPosition().getAbscisse());
         assertEquals(origine.getOrdonnee(), piece.getPosition().getOrdonnee());
 
-        // Revenir à la position d’origine
         piece.deplacerDe(-1, 0);
 
-        // Test déplacement valide : bas
         piece.deplacerDe(0, 1);
         assertEquals(origine.getAbscisse(), piece.getPosition().getAbscisse());
         assertEquals(origine.getOrdonnee() + 1, piece.getPosition().getOrdonnee());
 
-        // Test déplacement invalide : vers le haut
         assertThrows(IllegalArgumentException.class, () -> piece.deplacerDe(0, -1));
-
-        // Test déplacement invalide : diagonale
         assertThrows(IllegalArgumentException.class, () -> piece.deplacerDe(1, 1));
-
-        // Test déplacement invalide : trop grand déplacement horizontal
         assertThrows(IllegalArgumentException.class, () -> piece.deplacerDe(2, 0));
     }
 
-    // Fournit toutes les pièces à tester
+    @ParameterizedTest
+    @MethodSource("providePieces")
+    public void testTourner(Piece piece) {
+        Element[] beforeRotation = deepCopy(piece.getElements());
+
+        piece.tourner(true); // sens horaire
+
+        if (piece instanceof OTetromino || piece instanceof XPentomino) {
+            // Ces pièces ne doivent pas tourner
+            for (int i = 0; i < beforeRotation.length; i++) {
+                assertEquals(beforeRotation[i].getCoordonnees(), piece.getElements()[i].getCoordonnees(),
+                        piece.getClass().getSimpleName() + " ne devrait pas tourner");
+            }
+        } else {
+            boolean auMoinsUnElementBouge = false;
+            for (int i = 0; i < beforeRotation.length; i++) {
+                if (!beforeRotation[i].getCoordonnees().equals(piece.getElements()[i].getCoordonnees())) {
+                    auMoinsUnElementBouge = true;
+                    break;
+                }
+            }
+            assertTrue(auMoinsUnElementBouge, "La pièce aurait dû changer après rotation.");
+        }
+    }
+
+    private static Element[] deepCopy(Element[] original) {
+        Element[] copy = new Element[original.length];
+        for (int i = 0; i < original.length; i++) {
+            Coordonnees c = original[i].getCoordonnees();
+            copy[i] = new Element(c.getAbscisse(), c.getOrdonnee(), original[i].getCouleur());
+        }
+        return copy;
+    }
+
     private static Stream<Arguments> providePieces() {
         return Stream.of(TypePiece.values())
                 .map(type -> Arguments.of(type.creerInstance(randomCoord())));
