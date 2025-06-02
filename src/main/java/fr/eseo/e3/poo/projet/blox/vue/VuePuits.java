@@ -27,10 +27,10 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
 
     public VuePuits(Puits puits, int taille) {
         super();
-        this.vueTas = new VueTas(this, this.taille);
         this.puits = puits;
-        this.setBackground(Color.WHITE);
         this.setTaille(taille);
+        this.vueTas = new VueTas(this, this.taille);
+        this.setBackground(Color.WHITE);
         this.puits.addPropertyChangeListener(this);
 
         this.pieceDeplacement = new PieceDeplacement(this);

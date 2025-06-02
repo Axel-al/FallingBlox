@@ -1,5 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.vue;
 
+import fr.eseo.e3.poo.projet.blox.controleur.Gravite;
 import fr.eseo.e3.poo.projet.blox.modele.*;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.UsineDePiece;
 
@@ -26,9 +27,10 @@ public class VuePuitsAffichageTest {
     private void testConstructeurPuitsTaille() {
         Puits puits = new Puits();
         puits.setTas(new Tas(puits, 15));
-        VuePuits vuePuits = new VuePuits(puits, 40); // s’enregistre aussi comme listener ici
+        VuePuits vuePuits = new VuePuits(puits, 40);
 
-        // Important : VuePuits est listener AVANT ces appels
+        Gravite gravite = new Gravite(vuePuits, 500); // gravité toutes les 500 ms
+
         UsineDePiece.setMode(UsineDePiece.ALEATOIRE_PIECE);
         puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
         puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
