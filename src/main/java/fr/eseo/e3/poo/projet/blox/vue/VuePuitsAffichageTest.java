@@ -8,12 +8,13 @@ import javax.swing.*;
 public class VuePuitsAffichageTest {
 
     public VuePuitsAffichageTest() {
+        testConstructeurPuits();
         testConstructeurPuitsTaille();
     }
 
     private void testConstructeurPuits() {
         Puits puits = new Puits();
-        VuePuits vuePuits = new VuePuits(puits);
+        VuePuits vuePuits = new VuePuits(puits); // s’enregistre comme listener dans le constructeur
 
         JFrame frame = new JFrame("Puits");
         frame.setContentPane(vuePuits);
@@ -25,13 +26,14 @@ public class VuePuitsAffichageTest {
 
     private void testConstructeurPuitsTaille() {
         Puits puits = new Puits();
+        VuePuits vuePuits = new VuePuits(puits, 40); // s’enregistre aussi comme listener ici
+
+        // Important : VuePuits est listener AVANT ces appels
         UsineDePiece.setMode(UsineDePiece.ALEATOIRE_PIECE);
         puits.setPieceSuivante(UsineDePiece.genererTetromino());
         puits.setPieceSuivante(UsineDePiece.genererTetromino());
 
-        VuePuits vuePuits = new VuePuits(puits, 40);
-
-        JFrame frame = new JFrame("Puits et taille dynamique");
+        JFrame frame = new JFrame("Puits et pièce automatique");
         frame.setContentPane(vuePuits);
         frame.pack();
         frame.setLocationRelativeTo(null);

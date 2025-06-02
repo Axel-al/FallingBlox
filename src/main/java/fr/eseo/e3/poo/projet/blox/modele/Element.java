@@ -40,6 +40,13 @@ public class Element {
         this.couleur = couleur;
     }
 
+    public void deplacerDe(int deltaX, int deltaY) {
+        int x = coordonnees.getAbscisse() + deltaX;
+        int y = coordonnees.getOrdonnee() + deltaY;
+        this.coordonnees = new Coordonnees(x, y);
+    }
+
+
     @Override
     public String toString() {
         return this.coordonnees.toString() + " - " + this.couleur.toString();

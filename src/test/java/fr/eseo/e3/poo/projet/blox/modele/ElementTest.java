@@ -85,4 +85,18 @@ public class ElementTest {
         Element e2 = new Element(3, 4, Couleur.ORANGE);
         assertEquals(e1.hashCode(), e2.hashCode());
     }
+
+    @Test
+    public void testDeplacerDe() {
+        Element e = new Element(4, 5, Couleur.ROUGE);
+        e.deplacerDe(2, 3);
+        assertEquals(new Coordonnees(6, 8), e.getCoordonnees());
+
+        e.deplacerDe(-1, -2);
+        assertEquals(new Coordonnees(5, 6), e.getCoordonnees());
+
+        e.deplacerDe(0, 0); // déplacement nul
+        assertEquals(new Coordonnees(5, 6), e.getCoordonnees());
+    }
+
 }
