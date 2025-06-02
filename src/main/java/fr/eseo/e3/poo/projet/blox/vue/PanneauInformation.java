@@ -10,13 +10,13 @@ import java.beans.PropertyChangeListener;
 
 public class PanneauInformation extends JPanel implements PropertyChangeListener {
 
-    private static final int TAILLE_VUE_PIECE = 10;
+    private static final int TAILLE_VUE_PIECE = 20;
     private VuePiece vuePiece;
 
     public PanneauInformation(Puits puits) {
         super();
         puits.addPropertyChangeListener(this);
-        this.setPreferredSize(new Dimension(70, 70));
+        this.setPreferredSize(new Dimension(140, 70));
         this.setBackground(Color.WHITE);
     }
 

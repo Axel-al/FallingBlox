@@ -43,7 +43,7 @@ public final class UsineDePiece {
 
     public static Tetromino genererTetromino() {
         TypePiece tetrominoType;
-        var coords = new Coordonnees(2, 3);
+        var coords = new Coordonnees(3, 3);
 
         switch (UsineDePiece.mode) {
             case CYCLIC:
@@ -70,7 +70,7 @@ public final class UsineDePiece {
 
     public static Pentomino genererPentomino() {
         TypePiece pentominoType;
-        var coords = new Coordonnees(2, 3);
+        var coords = new Coordonnees(3, 3);
 
         switch (UsineDePiece.mode) {
             case CYCLIC:
@@ -97,7 +97,7 @@ public final class UsineDePiece {
 
     public static Piece genererPiece() {
         TypePiece pentominoType;
-        var coords = new Coordonnees(2, 3);
+        var coords = new Coordonnees(3, 3);
 
         switch (UsineDePiece.mode) {
             case CYCLIC:

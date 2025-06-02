@@ -73,7 +73,9 @@ public class Puits {
             this.pieceActuelle.setPosition(this.largeur / 2, -4);
             pcs.firePropertyChange("pieceActuelle", ancienne, this.pieceActuelle);
         }
+        Piece ancienneSuivante = this.pieceSuivante;
         this.pieceSuivante = pieceSuivante;
+        pcs.firePropertyChange("pieceSuivante", ancienneSuivante, this.pieceSuivante);
     }
 
     public void setLargeur(int largeur) {
