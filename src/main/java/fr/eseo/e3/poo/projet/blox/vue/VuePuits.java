@@ -12,6 +12,8 @@ import java.beans.PropertyChangeListener;
 public class VuePuits extends JPanel implements PropertyChangeListener {
     public final static int TAILLE_PAR_DEFAUT = 30;
 
+    private final VueTas vueTas;
+
     private Puits puits;
     private int taille;
     private VuePiece vuePiece;
@@ -25,6 +27,7 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
 
     public VuePuits(Puits puits, int taille) {
         super();
+        this.vueTas = new VueTas(this, this.taille);
         this.puits = puits;
         this.setBackground(Color.WHITE);
         this.setTaille(taille);
@@ -76,6 +79,10 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
         this.vuePiece = vuePiece;
     }
 
+    public VueTas getVueTas() {
+        return this.vueTas;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -89,6 +96,7 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
             g2D.drawLine(0, y * this.taille, this.puits.getLargeur() * this.taille, y * this.taille);
         }
 
+        vueTas.afficher(g2D);
         if (vuePiece != null) {
             vuePiece.afficherPiece(g2D);
         }
