@@ -70,4 +70,26 @@ public class PuitsTest {
         String expected = "Puits : Dimension " + Puits.LARGEUR_PAR_DEFAUT + " x " + Puits.PROFONDEUR_PAR_DEFAUT + "\nPiece Actuelle : " + p1 + "\nPiece Suivante : " + p2;
         assertEquals(expected, puits.toString());
     }
+
+    @Test
+    public void testConstructeurAvecTasParDefaut() {
+        Puits puits = new Puits();
+        assertNotNull(puits.getTas());
+        assertTrue(puits.getTas().getElements().isEmpty());
+    }
+
+    @Test
+    public void testConstructeurAvecTasElementsEtLignes() {
+        Puits puits = new Puits(10, 18, 20, 2);
+        assertNotNull(puits.getTas());
+        assertEquals(20, puits.getTas().getElements().size());
+    }
+
+    @Test
+    public void testSetEtGetTas() {
+        Puits puits = new Puits();
+        Tas tas = new Tas(puits, 5, 1);
+        puits.setTas(tas);
+        assertEquals(tas, puits.getTas());
+    }
 }
