@@ -17,4 +17,7 @@ public class XPentomino extends Pentomino {
         this.elements[3] = new Element(new Coordonnees(abscisse, ordonnee + 1), couleur);
         this.elements[4] = new Element(new Coordonnees(abscisse, ordonnee - 1), couleur);
     }
+
+    @Override
+    public void tourner(boolean sensHoraire) {};
 }

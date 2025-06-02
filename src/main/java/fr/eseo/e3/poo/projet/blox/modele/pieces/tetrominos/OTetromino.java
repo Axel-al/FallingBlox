@@ -17,4 +17,7 @@ public class OTetromino extends Tetromino {
             }
         }
     }
+
+    @Override
+    public void tourner(boolean sensHoraire) {};
 }

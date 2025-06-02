@@ -17,13 +17,41 @@ public interface Piece {
         }
     }
 
-
     default Couleur getCouleur() {
         return getElements()[0].getCouleur();
     }
 
     default Coordonnees getPosition() {
         return getElements()[0].getCoordonnees();
+    }
+
+    default void tourner(boolean sensHoraire) {
+        Element[] elements = getElements();
+        Coordonnees pivot = getPosition(); // élément de référence
+        int pivotX = pivot.getAbscisse();
+        int pivotY = pivot.getOrdonnee();
+
+        for (int i = 1; i < elements.length; i++) {
+            Coordonnees c = elements[i].getCoordonnees();
+
+            // Translation vers l’origine
+            int dx = c.getAbscisse() - pivotX;
+            int dy = c.getOrdonnee() - pivotY;
+
+            // Rotation autour de l’origine
+            int rx, ry;
+            if (sensHoraire) {
+                rx = dy;
+                ry = -dx;
+            } else {
+                rx = -dy;
+                ry = dx;
+            }
+
+            // Translation inverse
+            Coordonnees nouvelle = new Coordonnees(pivotX + rx, pivotY + ry);
+            elements[i].setCoordonnees(nouvelle);
+        }
     }
 
     Puits getPuits();
