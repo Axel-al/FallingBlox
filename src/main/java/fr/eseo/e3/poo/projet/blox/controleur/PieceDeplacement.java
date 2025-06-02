@@ -3,10 +3,9 @@ package fr.eseo.e3.poo.projet.blox.controleur;
 import fr.eseo.e3.poo.projet.blox.modele.Puits;
 import fr.eseo.e3.poo.projet.blox.vue.VuePuits;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
-public class PieceDeplacement implements MouseMotionListener {
+public class PieceDeplacement extends MouseAdapter {
 
     private final VuePuits vuePuits;
     private final Puits puits;
@@ -19,37 +18,41 @@ public class PieceDeplacement implements MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        if (puits.getPieceActuelle() == null) {
-            return;
-        }
+        if (puits.getPieceActuelle() == null) return;
 
         int colonne = event.getX() / vuePuits.getTaille();
 
-        if (colonne < 0 || colonne >= puits.getLargeur()) {
-            return; // ignore si hors grille
-        }
+        if (colonne < 0 || colonne >= puits.getLargeur()) return;
 
         if (ancienneColonne == -1) {
             ancienneColonne = colonne;
         } else if (colonne != ancienneColonne) {
-            int delta = colonne - ancienneColonne;
-
-            // Normaliser le déplacement à -1, 0, +1 (pas de saut de colonne)
-            delta = Integer.compare(delta, 0);
-
+            int delta = Integer.compare(colonne - ancienneColonne, 0);
             try {
                 puits.getPieceActuelle().deplacerDe(delta, 0);
                 ancienneColonne = colonne;
-            } catch (IllegalArgumentException e) {
-                // déplacement non permis : on ignore
+            } catch (IllegalArgumentException ignored) {
+                // collision ou déplacement impossible
             }
-
             vuePuits.repaint();
         }
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        // Rien à faire ici pour l’instant
+    public void mouseEntered(MouseEvent e) {
+        ancienneColonne = -1;
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        if (puits.getPieceActuelle() == null) return;
+        if (e.getWheelRotation() > 0) {
+            try {
+                puits.getPieceActuelle().deplacerDe(0, 1);
+                vuePuits.repaint();
+            } catch (IllegalArgumentException ignored) {
+                // collision en bas
+            }
+        }
     }
 }

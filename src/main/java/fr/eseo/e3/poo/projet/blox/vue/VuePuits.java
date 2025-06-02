@@ -29,7 +29,11 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
         this.puits.addPropertyChangeListener(this);
 
         this.pieceDeplacement = new PieceDeplacement(this);
+
+        // Enregistrement unique pour les trois types d'écoute
         this.addMouseMotionListener(this.pieceDeplacement);
+        this.addMouseWheelListener(this.pieceDeplacement);
+        this.addMouseListener(this.pieceDeplacement);
     }
 
     public int getTaille() {
@@ -57,7 +61,7 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
         this.puits = puits;
         this.puits.addPropertyChangeListener(this);
         setTaille(this.taille);
-        // Pas besoin de recréer pieceDeplacement, il référence toujours getPuits()
+        // pieceDeplacement reste fonctionnel car il lit toujours getPuits()
     }
 
     public VuePiece getVuePiece() {
