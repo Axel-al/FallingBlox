@@ -63,7 +63,7 @@ public class VuePuits extends JPanel {
         for (int x = 0; x <= this.puits.getLargeur(); x++) {
             g2D.drawLine(x * this.taille, 0, x * this.taille, this.puits.getProfondeur() * this.taille);
         }
-        for (int y = 0; y <= this.puits.getProfondeur(); yg++) {
+        for (int y = 0; y <= this.puits.getProfondeur(); y++) {
             g2D.drawLine(0, y * this.taille, this.puits.getLargeur() * this.taille, y * this.taille);
         }
 
