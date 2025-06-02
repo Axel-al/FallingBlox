@@ -1,7 +1,7 @@
 package fr.eseo.e3.poo.projet.blox.controleur;
 
-import fr.eseo.e3.poo.projet.blox.modele.*;
-import fr.eseo.e3.poo.projet.blox.modele.pieces.*;
+import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.pieces.UsineDePiece;
 import fr.eseo.e3.poo.projet.blox.vue.VuePuits;
 
 import javax.swing.*;
@@ -16,14 +16,20 @@ public class PieceDeplacementTest {
         Puits puits = new Puits();
         VuePuits vuePuits = new VuePuits(puits, 40);
 
-        // Ajout d'une pièce pour permettre le test
-        puits.setPieceSuivante(UsineDePiece.genererTetromino());
+        // Génère une pièce visible à l'écran
+        puits.setPieceSuivante(UsineDePiece.genererPentomino());
         puits.setPieceSuivante(UsineDePiece.genererTetromino());
 
-        for (int i = 0; i < 7; i++)
-            puits.getPieceActuelle().deplacerDe(0, 1);
+        // Fait descendre manuellement la pièce pour qu’elle soit visible
+        for (int i = 0; i < 7; i++) {
+            try {
+                puits.getPieceActuelle().deplacerDe(0, 1);
+            } catch (IllegalArgumentException ignored) {
+                // ignore erreurs de dépassement
+            }
+        }
 
-        JFrame frame = new JFrame("Test déplacement souris");
+        JFrame frame = new JFrame("Test déplacement souris + molette");
         frame.setContentPane(vuePuits);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
