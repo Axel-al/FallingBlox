@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Gravite implements ActionListener {
-    private static final int DEFAULT_PERIODICITE = 500; // en ms
+    private static final int DEFAULT_PERIODICITE = 500;
 
     private final VuePuits vuePuits;
     private final Puits puits;
@@ -24,7 +24,7 @@ public class Gravite implements ActionListener {
         this.vuePuits = vuePuits;
         this.puits = vuePuits.getPuits();
         this.timer = new Timer(periodicite, this);
-        this.timer.start(); // démarre la gravité automatiquement
+        this.timer.start();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Gravite implements ActionListener {
         if (totalLignes / 5 > lignesSupprimeesTotal / 5) {
             lignesSupprimeesTotal = totalLignes;
             int nouvelleVitesse = (int)(timer.getDelay() * 0.95);
-            timer.setDelay(Math.max(50, nouvelleVitesse)); // minimum 50ms
+            timer.setDelay(Math.max(50, nouvelleVitesse));
         }
     }
 }

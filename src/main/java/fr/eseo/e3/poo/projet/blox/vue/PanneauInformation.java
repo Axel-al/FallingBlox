@@ -12,7 +12,6 @@ public class PanneauInformation extends JPanel implements PropertyChangeListener
 
     private static final int TAILLE_VUE_PIECE = 20;
     private VuePiece vuePiece;
-
     private int score = 0;
 
     public PanneauInformation(Puits puits) {
@@ -25,6 +24,10 @@ public class PanneauInformation extends JPanel implements PropertyChangeListener
     public void ajouterScore(int points) {
         this.score += points;
         this.repaint();
+    }
+
+    public int getScore() {
+        return score;
     }
 
     @Override
