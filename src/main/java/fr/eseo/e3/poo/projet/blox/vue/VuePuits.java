@@ -1,5 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.vue;
 
+import fr.eseo.e3.poo.projet.blox.controleur.PieceDeplacement;
 import fr.eseo.e3.poo.projet.blox.modele.Puits;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
 
@@ -14,6 +15,7 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
     private Puits puits;
     private int taille;
     private VuePiece vuePiece;
+    private final PieceDeplacement pieceDeplacement;
 
     public VuePuits(Puits puits) {
         this(puits, TAILLE_PAR_DEFAUT);
@@ -25,6 +27,9 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
         this.setBackground(Color.WHITE);
         this.setTaille(taille);
         this.puits.addPropertyChangeListener(this);
+
+        this.pieceDeplacement = new PieceDeplacement(this);
+        this.addMouseMotionListener(this.pieceDeplacement);
     }
 
     public int getTaille() {
@@ -48,9 +53,11 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
     }
 
     public void setPuits(Puits puits) {
+        this.puits.removePropertyChangeListener(this);
         this.puits = puits;
-        setTaille(this.taille);
         this.puits.addPropertyChangeListener(this);
+        setTaille(this.taille);
+        // Pas besoin de recréer pieceDeplacement, il référence toujours getPuits()
     }
 
     public VuePiece getVuePiece() {
