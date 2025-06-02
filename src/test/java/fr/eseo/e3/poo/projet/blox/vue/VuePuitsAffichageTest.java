@@ -29,8 +29,6 @@ public class VuePuitsAffichageTest {
         puits.setTas(new Tas(puits, 15));
         VuePuits vuePuits = new VuePuits(puits, 40);
 
-        Gravite gravite = new Gravite(vuePuits, 500); // gravité toutes les 500 ms
-
         UsineDePiece.setMode(UsineDePiece.ALEATOIRE_PIECE);
         puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
         puits.setPieceSuivante(UsineDePiece.genererTetromino(puits));
