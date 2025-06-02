@@ -50,7 +50,7 @@ public class VuePuits extends JPanel {
         return vuePiece;
     }
 
-    private void setVuePiece(VuePiece vuePiece) {
+    public void setVuePiece(VuePiece vuePiece) {
         this.vuePiece = vuePiece;
     }
 

@@ -1,13 +1,13 @@
 package fr.eseo.e3.poo.projet.blox.vue;
 
 import fr.eseo.e3.poo.projet.blox.modele.Puits;
+import fr.eseo.e3.poo.projet.blox.modele.pieces.UsineDePiece;
 
 import javax.swing.*;
 
 public class VuePuitsAffichageTest {
 
     public VuePuitsAffichageTest() {
-        testConstructeurPuits();
         testConstructeurPuitsTaille();
     }
 
@@ -25,9 +25,14 @@ public class VuePuitsAffichageTest {
 
     private void testConstructeurPuitsTaille() {
         Puits puits = new Puits();
-        VuePuits vuePuits = new VuePuits(puits, 40);
+        UsineDePiece.setMode(UsineDePiece.ALEATOIRE_PIECE);
+        puits.setPieceSuivante(UsineDePiece.genererTetromino()); // 1ʳᵉ : pieceSuivante
+        puits.setPieceSuivante(UsineDePiece.genererTetromino()); // 2ᵉ : devient pieceActuelle
 
-        JFrame frame = new JFrame("Puits et taille");
+        VuePuits vuePuits = new VuePuits(puits);
+        vuePuits.setVuePiece(new VuePiece(puits.getPieceActuelle(), vuePuits.getTaille()));
+
+        JFrame frame = new JFrame("Puits et taille avec pièce");
         frame.setContentPane(vuePuits);
         frame.pack();
         frame.setLocationRelativeTo(null);
