@@ -1,6 +1,6 @@
 package fr.eseo.e3.poo.projet.blox.vue;
 
-import fr.eseo.e3.poo.projet.blox.controleur.PieceDeplacement;
+import fr.eseo.e3.poo.projet.blox.controleur.*;
 import fr.eseo.e3.poo.projet.blox.modele.Puits;
 import fr.eseo.e3.poo.projet.blox.modele.pieces.Piece;
 
@@ -15,7 +15,9 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
     private Puits puits;
     private int taille;
     private VuePiece vuePiece;
+
     private final PieceDeplacement pieceDeplacement;
+    private final PieceRotation pieceRotation;
 
     public VuePuits(Puits puits) {
         this(puits, TAILLE_PAR_DEFAUT);
@@ -29,11 +31,13 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
         this.puits.addPropertyChangeListener(this);
 
         this.pieceDeplacement = new PieceDeplacement(this);
+        this.pieceRotation = new PieceRotation(this);
 
-        // Enregistrement unique pour les trois types d'écoute
+        // Enregistrement des écouteurs
         this.addMouseMotionListener(this.pieceDeplacement);
         this.addMouseWheelListener(this.pieceDeplacement);
         this.addMouseListener(this.pieceDeplacement);
+        this.addMouseListener(this.pieceRotation);
     }
 
     public int getTaille() {
@@ -61,7 +65,7 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
         this.puits = puits;
         this.puits.addPropertyChangeListener(this);
         setTaille(this.taille);
-        // pieceDeplacement reste fonctionnel car il lit toujours getPuits()
+        // Les listeners utilisent toujours getPuits(), donc pas besoin de recréer
     }
 
     public VuePiece getVuePiece() {
