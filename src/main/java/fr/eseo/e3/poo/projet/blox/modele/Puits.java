@@ -30,6 +30,12 @@ public class Puits {
         this.tas = new Tas(this);
     }
 
+    public Puits(int largeur, int profondeur, int nbElements) {
+        this.largeur = largeur;
+        this.profondeur = profondeur;
+        this.tas = new Tas(this, nbElements);
+    }
+
     public Puits(int largeur, int profondeur, int nbElements, int nbLignes) {
         this.largeur = largeur;
         this.profondeur = profondeur;

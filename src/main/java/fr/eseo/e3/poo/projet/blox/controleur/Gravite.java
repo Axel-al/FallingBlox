@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Gravite implements ActionListener {
-    private static final int DEFAULT_PERIODICITE = 1000; // en ms
+    private static final int DEFAULT_PERIODICITE = 500; // en ms
 
     private final VuePuits vuePuits;
     private final Puits puits;

@@ -50,7 +50,7 @@ public class VuePuits extends JPanel implements PropertyChangeListener {
     public void setTaille(int taille) {
         this.taille = taille;
         this.setPreferredSize(new Dimension(
-                this.puits.getLargeur() * this.taille,
+                this.puits.getLargeur() * this.taille + 1,
                 this.puits.getProfondeur() * this.taille));
 
         Window window = SwingUtilities.getWindowAncestor(this);
